@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" method="upgrade">
+    <name>com_rest</name>
+    <creationDate>2013-09-10</creationDate>
+    <copyright>Copyright (C) 2013. Tous droits réservés.</copyright>
+    <license>GNU General Public License version 2 ou version ultérieure ; Voir LICENSE.txt</license>
+    <author>Roffin</author>
+    <authorEmail>yroffin@gmail.com</authorEmail>
+    <authorUrl>http://www.roffin.org</authorUrl>
+    <version>1.0.0</version>
+    <description>RESTfull component</description>
+    
+    <files folder="site">
+        <filename>index.html</filename>
+        <filename>rest.php</filename>
+        <filename>controller.php</filename>
+        <filename>router.php</filename>
+    </files>
+    <languages folder="site">
+			<language tag="en-GB">language/en-GB.com_rest.ini</language>
+			<language tag="fr-FR">language/fr-FR.com_rest.ini</language>
+    </languages>
+    <administration>
+    </administration>
+</extension>
