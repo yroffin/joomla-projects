@@ -7,6 +7,6 @@
   <packaging>pom</packaging>
   <modules>
   	<module>joomla-projects-rest-component</module>
-    <module>joomla-projects-swap</module>
+  	<module>joomla-projects-swap</module>
   </modules>
 </project>
