@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  *  Copyright 2012 Yannick Roffin
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +16,22 @@
  *   limitations under the License.
  */
 
-require_once(JPATH_COMPONENT . '/controller.php');
+/**
+ * Description of SwapModel
+ *
+ * @author yannick
+ */
+class SwapModel extends JModelBase {
 
-// Get an instance of the controller prefixed by <name>
-$controller = new swapController();
+    /**
+     * Get the time.
+     *
+     * @return  integer
+     *
+     * @since   12.1
+     */
+    public function getTime() {
+        return time();
+    }
 
-// Perform the Request task
-$controller->execute();
-
-
+}

@@ -15,13 +15,31 @@
  *  See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+defined('JPATH_PLATFORM') or die;
 
-require_once(JPATH_COMPONENT . '/controller.php');
+/**
+ * Description of view
+ *
+ * @author yannick
+ */
+class SwapViewJson extends JViewBase {
 
-// Get an instance of the controller prefixed by <name>
-$controller = new swapController();
+    /**
+     * Render some data
+     *
+     * @return  string  The rendered view.
+     *
+     * @since   12.1
+     * @throws  RuntimeException on database error.
+     */
+    public function render() {
+        // Prepare some data from the model.
+        $data = array(
+            'count' => "a"
+        );
 
-// Perform the Request task
-$controller->execute();
+        // Convert the data to JSON format.
+        return json_encode($data);
+    }
 
-
+}

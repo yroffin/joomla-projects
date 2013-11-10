@@ -15,13 +15,26 @@
  *  See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+defined('JPATH_PLATFORM') or die;
 
-require_once(JPATH_COMPONENT . '/controller.php');
+/**
+ * Description of view
+ *
+ * @author yannick
+ */
+class SwapViewHtml extends JViewHtml {
 
-// Get an instance of the controller prefixed by <name>
-$controller = new swapController();
+    /**
+     * Redefine the model so the correct type hinting is available in the layout.
+     *
+     * @var     MyDatabaseModel
+     * @since   12.1
+     */
+    protected $model;
 
-// Perform the Request task
-$controller->execute();
+    public function __construct(JModel $model) {
+        parent::__construct($model);
+        $this->paths->insert(JPATH_COMPONENT . "/views/layout", 0);
+    }
 
-
+}
