@@ -27,14 +27,24 @@ class SwapViewHtml extends JViewHtml {
     /**
      * Redefine the model so the correct type hinting is available in the layout.
      *
-     * @var     MyDatabaseModel
-     * @since   12.1
+     * @var     SwapModel
+     * @since   0.1
      */
     protected $model;
 
     public function __construct(JModel $model) {
         parent::__construct($model);
         $this->paths->insert(JPATH_COMPONENT . "/views/layout", 0);
+        /**
+         * bootstrap and angular JS setup
+         */
+        JHtml::_('bootstrap.framework');
+        JHtml::script(Juri::base() . 'components/com_swap/angular-1.2.0/angular.min.js');
+        JHtml::script(Juri::base() . 'components/com_swap/angular-1.2.0/angular-route.min.js');
+        JHtml::script(Juri::base() . 'components/com_swap/angular-1.2.0/angular-resource.min.js');
+        JHtml::script(Juri::base() . 'components/com_swap/client/org.app.services.js');
+        JHtml::script(Juri::base() . 'components/com_swap/client/org.app.controllers.js');
+        JHtml::script(Juri::base() . 'components/com_swap/client/org.app.modules.js');
     }
 
 }

@@ -14,7 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-$data = "a";
 ?>
 
-<p><?php echo $data; ?></p>
+<div ng-app="swapClient">
+    <div ng-view />
+</div>

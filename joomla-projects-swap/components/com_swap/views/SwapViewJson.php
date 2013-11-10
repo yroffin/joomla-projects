@@ -29,17 +29,12 @@ class SwapViewJson extends JViewBase {
      *
      * @return  string  The rendered view.
      *
-     * @since   12.1
+     * @since   0.1
      * @throws  RuntimeException on database error.
      */
     public function render() {
-        // Prepare some data from the model.
-        $data = array(
-            'count' => "a"
-        );
-
         // Convert the data to JSON format.
-        return json_encode($data);
+        return json_encode($this->model->getSwaps());
     }
 
 }

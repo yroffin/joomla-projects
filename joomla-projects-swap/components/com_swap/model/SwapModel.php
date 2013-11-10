@@ -15,20 +15,29 @@
  *  See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+defined('JPATH_PLATFORM') or die;
+
+require_once(JPATH_COMPONENT . '/model/SwapDatabaseModel.php');
 
 /**
- * Description of SwapModel
+ * Custom business model.
  *
- * @author yannick
+ * @package  swap
+ *
+ * @since   0.1
  */
-class SwapModel extends JModelBase {
+class SwapModel extends SwapDatabaseModel {
+
+    public function __construct() {
+        parent::__construct();
+    }
 
     /**
      * Get the time.
      *
      * @return  integer
      *
-     * @since   12.1
+     * @since   0.1
      */
     public function getTime() {
         return time();

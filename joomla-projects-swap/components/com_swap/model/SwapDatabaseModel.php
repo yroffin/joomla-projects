@@ -15,22 +15,67 @@
  *  See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+defined('JPATH_PLATFORM') or die;
 
 /**
- * My custom database model.
+ * Custom database model.
  *
- * @package  Examples
+ * @package  swap
  *
- * @since   12.1
+ * @since   0.1
  */
 class SwapDatabaseModel extends JModelDatabase {
+
+    /**
+     * Get the swap objects.
+     *
+     * @return  integer
+     *
+     * @since   0.1
+     * @throws  RuntimeException on database error.
+     */
+    public function getSwaps() {
+        // Get the query builder from the internal database object.
+        $q = $this->db->getQuery(true);
+
+        // Prepare the query to count the number of content records.
+        $q->select('id')
+                ->from($q->qn('#__content'));
+
+        $this->db->setQuery($q);
+
+        // Execute and return the result.
+        return $this->db->loadObjectList();
+    }
+
+    /**
+     * Get the swap objects.
+     *
+     * @return  integer
+     *
+     * @since   0.1
+     * @throws  RuntimeException on database error.
+     */
+    public function getSwap() {
+        // Get the query builder from the internal database object.
+        $q = $this->db->getQuery(true);
+
+        // Prepare the query to count the number of content records.
+        $q->select('*')
+                ->from($q->qn('#__content'))->where('id = 1');
+
+        $this->db->setQuery($q);
+
+        // Execute and return the result.
+        return $this->db->loadObject();
+    }
 
     /**
      * Get the content count.
      *
      * @return  integer
      *
-     * @since   12.1
+     * @since   0.1
      * @throws  RuntimeException on database error.
      */
     public function getCount() {
@@ -47,11 +92,4 @@ class SwapDatabaseModel extends JModelDatabase {
         return $this->db->loadResult();
     }
 
-}
-
-try {
-    $model = new SwapDatabaseModel;
-    $count = $model->getCount();
-} catch (RuntimeException $e) {
-    // Handle database error.
 }

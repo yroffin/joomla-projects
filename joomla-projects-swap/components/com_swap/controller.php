@@ -28,29 +28,46 @@ class swapController extends JControllerBase {
      *
      * @return  void
      *
-     * @since   12.1
+     * @since   0.1
      * @throws  RuntimeException
      */
     public function execute() {
-        echo ($this->factory("html")->render());
+        // Setup view.
+        $this->view = $this->input->getCmd("view");
+        if (!isset($this->view)) {
+            $this->view = "SwapView";
+        }
+        // Setup format.
+        $this->format = $this->input->getCmd("format");
+        if (!isset($this->format)) {
+            $this->format = "html";
+        }
+        // Render view.
+        echo ($this->factory($this->view . '#' . $this->format)->render());
     }
 
     /**
-     * Method to execute the controller.
+     * View factory.
      *
      * @return  void
      *
-     * @since   12.1
+     * @since   0.1
      * @throws  RuntimeException
      */
     private function factory($format) {
         switch ($format) {
-            case "html":
+            case "SwapView#html":
                 require_once(JPATH_COMPONENT . '/views/SwapViewHtml.php');
                 return new SwapViewHtml(new SwapModel());
-            case "json":
+            case "SwapView#json":
                 require_once(JPATH_COMPONENT . '/views/SwapViewJson.php');
                 return new SwapViewJson(new SwapModel());
+            case "SwapLoadView#json":
+                require_once(JPATH_COMPONENT . '/views/SwapLoadViewJson.php');
+                return new SwapLoadViewJson(new SwapModel());
+            default:
+                require_once(JPATH_COMPONENT . '/views/SwapViewHtml.php');
+                return new SwapViewHtml(new SwapModel());
         }
     }
 

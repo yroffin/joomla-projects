@@ -15,6 +15,7 @@
  *  See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+defined('JPATH_PLATFORM') or die;
 
 require_once(JPATH_COMPONENT . '/controller.php');
 
