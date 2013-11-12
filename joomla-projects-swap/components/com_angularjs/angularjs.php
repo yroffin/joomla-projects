@@ -16,25 +16,3 @@
  *   limitations under the License.
  */
 defined('JPATH_PLATFORM') or die;
-
-/**
- * Description of view
- *
- * @author yannick
- */
-class SwapLoadViewJson extends JViewBase {
-
-    /**
-     * Render some data
-     *
-     * @return  string  The rendered view.
-     *
-     * @since   12.1
-     * @throws  RuntimeException on database error.
-     */
-    public function render() {
-        // Convert the data to JSON format.
-        return json_encode($this->model->getSwap());
-    }
-
-}

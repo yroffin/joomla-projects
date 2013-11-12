@@ -19,31 +19,20 @@ defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.application.component.controller');
 
+require_once(JPATH_BASE . '/components/com_angularjs/controller.php');
+require_once(JPATH_BASE . '/components/com_angularjs/view.php');
 require_once(JPATH_COMPONENT . '/model/SwapModel.php');
 
-class swapController extends JControllerBase {
+class swapController extends AngularJsController {
 
     /**
-     * Method to execute the controller.
-     *
-     * @return  void
-     *
-     * @since   0.1
-     * @throws  RuntimeException
+     * Default constructor
+     * @param JInput $input
+     * @param JApplicationBase $app
      */
-    public function execute() {
-        // Setup view.
-        $this->view = $this->input->getCmd("view");
-        if (!isset($this->view)) {
-            $this->view = "SwapView";
-        }
-        // Setup format.
-        $this->format = $this->input->getCmd("format");
-        if (!isset($this->format)) {
-            $this->format = "html";
-        }
-        // Render view.
-        echo ($this->factory($this->view . '#' . $this->format)->render());
+    public function __construct(JInput $input = null, JApplicationBase $app = null) {
+        parent::__construct($input, $app);
+        $this->defaultView = "SwapView";
     }
 
     /**
@@ -54,20 +43,19 @@ class swapController extends JControllerBase {
      * @since   0.1
      * @throws  RuntimeException
      */
-    private function factory($format) {
+    protected function factory($format, $input) {
         switch ($format) {
             case "SwapView#html":
                 require_once(JPATH_COMPONENT . '/views/SwapViewHtml.php');
-                return new SwapViewHtml(new SwapModel());
-            case "SwapView#json":
-                require_once(JPATH_COMPONENT . '/views/SwapViewJson.php');
-                return new SwapViewJson(new SwapModel());
-            case "SwapLoadView#json":
-                require_once(JPATH_COMPONENT . '/views/SwapLoadViewJson.php');
-                return new SwapLoadViewJson(new SwapModel());
+                return new SwapViewHtml(new SwapModel(), $input);
+            case "SwapService#json":
+                require_once(JPATH_COMPONENT . '/views/SwapServiceJson.php');
+                JFactory::getDocument()->setMimeEncoding('application/json');
+                JResponse::setHeader('Content-Disposition', 'attachment;filename="SwapService.json"');
+                return new SwapServiceJson(new SwapModel(), $input);
             default:
                 require_once(JPATH_COMPONENT . '/views/SwapViewHtml.php');
-                return new SwapViewHtml(new SwapModel());
+                return new SwapViewHtml(new SwapModel(), $input);
         }
     }
 

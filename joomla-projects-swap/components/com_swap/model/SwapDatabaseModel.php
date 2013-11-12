@@ -39,8 +39,8 @@ class SwapDatabaseModel extends JModelDatabase {
         $q = $this->db->getQuery(true);
 
         // Prepare the query to count the number of content records.
-        $q->select('id')
-                ->from($q->qn('#__content'));
+        $q->select('id,title')
+                ->from($q->qn('#__swap_content'));
 
         $this->db->setQuery($q);
 
@@ -56,13 +56,13 @@ class SwapDatabaseModel extends JModelDatabase {
      * @since   0.1
      * @throws  RuntimeException on database error.
      */
-    public function getSwap() {
+    public function getSwap($id) {
         // Get the query builder from the internal database object.
         $q = $this->db->getQuery(true);
 
         // Prepare the query to count the number of content records.
         $q->select('*')
-                ->from($q->qn('#__content'))->where('id = 1');
+                ->from($q->qn('#__swap_content'))->where('id = ' . $id);
 
         $this->db->setQuery($q);
 

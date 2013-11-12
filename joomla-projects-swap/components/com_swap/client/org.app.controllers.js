@@ -28,7 +28,17 @@ function SwapCtrl($scope, $routeParams, Swap) {
 }
 
 function MainCtrl($scope, $location, Swap) {
-    $scope.swaps = Swap.swaps({});
+    Swap.swaps({},
+            function(data) {
+                $scope.swaps = data;
+            });
+
+    /**
+     * setup test data
+     */
+    $scope.setup = function() {
+        Swap.setup();
+    }
 
     /**
      * load swap

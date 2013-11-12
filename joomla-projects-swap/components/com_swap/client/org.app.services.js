@@ -17,14 +17,21 @@ angular.module('swapServices', ['ngResource'],
                 return $resource('', {}, {
                     swaps: {
                         url: '/joomla/3.2.0',
-                        params: {option:'com_swap', view:'SwapView', format:'json'}, 
+                        params: {option:'com_swap', service:'Swap', method:'swaps', format:'json'}, 
                         method: 'POST',
                         isArray: true,
                         cache: false
                     },
                     swap: {
                         url: '/joomla/3.2.0', 
-                        params: {option:'com_swap', view:'SwapLoadView', format:'json', swapId: swapId}, 
+                        params: {option:'com_swap', service:'Swap', method:'swap', format:'json', swapId: swapId}, 
+                        method: 'POST', 
+                        isArray: false, 
+                        cache: false
+                    },
+                    setup: {
+                        url: '/joomla/3.2.0', 
+                        params: {option:'com_swap', service:'Swap', method:'setup', format:'json'}, 
                         method: 'POST', 
                         isArray: false, 
                         cache: false

@@ -43,4 +43,75 @@ class SwapModel extends SwapDatabaseModel {
         return time();
     }
 
+    /**
+     * Method to extract the name of a discreet installation sql file from the installation manifest file.
+     *
+     * @param   object  $element  The XML node to process
+     *
+     * @return  mixed  Number of queries processed or False on error
+     *
+     * @since   3.1
+     */
+    public function setup($file, $driver, $charset) {
+
+        $queries = array();
+        $db = $this->getDb();
+        $dbDriver = strtolower($db->name);
+
+        if ($dbDriver == 'mysqli') {
+            $dbDriver = 'mysql';
+        }
+
+        // Get the name of the sql file to process
+        $fCharset = (strtolower($charset) == 'utf8') ? 'utf8' : '';
+        $fDriver = strtolower($driver);
+
+        if ($fDriver == 'mysqli') {
+            $fDriver = 'mysql';
+        }
+
+        if ($fCharset == 'utf8' && $fDriver == $dbDriver) {
+            $sqlfile = JPATH_COMPONENT_ADMINISTRATOR . "/sql/" . $file . "." . $fDriver . "." . $fCharset . ".sql";
+
+            // Check that sql files exists before reading. Otherwise raise error for rollback
+            if (!file_exists($sqlfile)) {
+                JLog::add(JText::sprintf('JLIB_SWAP_ERROR_SQL_ERROR', $db->stderr(true)), JLog::WARNING, 'jerror');
+                return false;
+            }
+
+            $buffer = file_get_contents($sqlfile);
+
+            // Graceful exit and rollback if read not successful
+            if ($buffer === false) {
+                JLog::add(JText::_('JLIB_SWAP_ERROR_SQL_READBUFFER'), JLog::WARNING, 'jerror');
+
+                return false;
+            }
+
+            // Create an array of queries from the sql file
+            $queries = JDatabaseDriver::splitSql($buffer);
+
+            if (count($queries) == 0) {
+                // No queries to process
+                return 0;
+            }
+
+            // Process each query in the $queries array (split out of sql file).
+            foreach ($queries as $query) {
+                $query = trim($query);
+
+                if ($query != '' && $query{0} != '#') {
+                    $db->setQuery($query);
+
+                    if (!$db->execute()) {
+                        JLog::add(JText::sprintf('JLIB_SWAP_ERROR_SQL_ERROR', $db->stderr(true)), JLog::WARNING, 'jerror');
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return (int) count($queries);
+    }
+
 }

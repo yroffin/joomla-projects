@@ -22,19 +22,33 @@ defined('JPATH_PLATFORM') or die;
  *
  * @author yannick
  */
-class SwapViewJson extends JViewBase {
+class SwapServiceJson extends AngularJSServiceBase {
 
     /**
-     * Render some data
-     *
-     * @return  string  The rendered view.
-     *
-     * @since   0.1
-     * @throws  RuntimeException on database error.
+     * setup
+     * @return nothing
      */
-    public function render() {
+    public function setup() {
+        // Convert the data to JSON format.
+        return json_encode($this->model->setup("install", "mysql", "utf8"));
+    }
+
+    /**
+     * getSwaps
+     * @return all swaps
+     */
+    public function swaps() {
         // Convert the data to JSON format.
         return json_encode($this->model->getSwaps());
+    }
+
+    /**
+     * getSwaps
+     * @return all swaps
+     */
+    public function swap($id) {
+        // Convert the data to JSON format.
+        return json_encode($this->model->getSwap($this->input->getCmd("swapId")));
     }
 
 }
